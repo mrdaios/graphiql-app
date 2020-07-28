@@ -22,7 +22,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
 
-  mainWindow = new BrowserWindow({ width: 1024, height: 728 });
+  mainWindow = new BrowserWindow({ width: 1024, height: 728 ,webPreferences:{nodeIntegration:true}});
 
   electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['Origin'] = 'electron://graphiql-app';
@@ -171,6 +171,19 @@ app.on('ready', function() {
       }, {
         label: 'Bring All to Front',
         selector: 'arrangeInFront:'
+      }]
+    },{
+      label: 'Utils',
+      submenu: [{
+        label: '导入',
+        click: function() {
+          mainWindow.webContents.send('handleElectronMenuOption', 'IMPORT_GraphQL');
+        }
+      }, {
+        label: '导出',
+        click: function() {
+          mainWindow.webContents.send('handleElectronMenuOption', 'EXPORT_GraphQL');
+        }
       }]
     }, {
       label: 'Help',

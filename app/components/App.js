@@ -7,6 +7,7 @@ import GraphiQL from 'graphiql/dist';
 import Modal from 'react-modal/lib/index';
 import { request as httpRequest } from 'http';
 import { request as httpsRequest } from 'https';
+import {clipboard} from 'electron';
 
 Modal.setAppElement(document.getElementById('react-root'));
 
@@ -61,8 +62,14 @@ export default class App extends React.Component {
       case 'PREVIOUS_TAB':
         this.gotoPreviousTab();
         break;
-      case 'EXPORT_QUERY':
+      case 'EXPORT_QUERY1':
         this.exportQuery();
+        break;
+      case 'IMPORT_GraphQL':
+        this.importGraphQL();
+        break;
+      case 'EXPORT_GraphQL':
+        this.exportGraphQL();
         break;
       default:
         console.error("No idea how to handle '" + option + "'");
@@ -153,6 +160,33 @@ export default class App extends React.Component {
       variables
     };
     this.copyToClipboard(JSON.stringify(queryObj, null, 2));
+  }
+
+  importGraphQL() {
+    const importText = clipboard.readText();
+    console.log(JSON.parse(importText));
+    // this.graphiql.getQueryEditor().value = "1234324";
+    // const queryText = this.graphiql.getQueryEditor().getValue();
+    // const variablesText = this.graphiql.getVariableEditor().getValue();
+    // const variables = variablesText ? JSON.parse(variablesText) : undefined;
+    // const queryObj = {
+    //   query: queryText,
+    //   variables
+    // };
+    // this.copyToClipboard(JSON.stringify(queryObj, null, 2));
+    // console.error("No idea how to handle ");
+  }
+
+  exportGraphQL() {
+    const queryText = this.graphiql.getQueryEditor().getValue();
+    const variablesText = this.graphiql.getVariableEditor().getValue();
+    const variables = variablesText ? JSON.parse(variablesText) : undefined;
+    const queryObj = {
+      query: queryText,
+      variables
+    };
+    console.log(JSON.stringify(queryText));
+    this.copyToClipboard(JSON.stringify(queryText));
   }
 
   copyToClipboard(text) {
