@@ -15,7 +15,7 @@
     "package": "build --dir",
     "dist-clean": "rm -rf ./dist ./release",
     "dist": "build -mwl",
-    "release": "yarn dist-clean && yarn build && build -mwl",
+    "release": "yarn dist-clean && yarn build && yarn build -mwl",
     "test": "npm run build",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -120,5 +120,6 @@
     "nsis": {
       "perMachine": true
     }
-  }
+  },
+  "__npminstall_done": false
 }

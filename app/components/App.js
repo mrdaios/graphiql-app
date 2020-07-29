@@ -164,28 +164,11 @@ export default class App extends React.Component {
 
   importGraphQL() {
     const importText = clipboard.readText();
-    console.log(JSON.parse(importText));
-    // this.graphiql.getQueryEditor().value = "1234324";
-    // const queryText = this.graphiql.getQueryEditor().getValue();
-    // const variablesText = this.graphiql.getVariableEditor().getValue();
-    // const variables = variablesText ? JSON.parse(variablesText) : undefined;
-    // const queryObj = {
-    //   query: queryText,
-    //   variables
-    // };
-    // this.copyToClipboard(JSON.stringify(queryObj, null, 2));
-    // console.error("No idea how to handle ");
+    this.graphiql.getQueryEditor().setValue(JSON.parse(importText));
   }
 
   exportGraphQL() {
     const queryText = this.graphiql.getQueryEditor().getValue();
-    const variablesText = this.graphiql.getVariableEditor().getValue();
-    const variables = variablesText ? JSON.parse(variablesText) : undefined;
-    const queryObj = {
-      query: queryText,
-      variables
-    };
-    console.log(JSON.stringify(queryText));
     this.copyToClipboard(JSON.stringify(queryText));
   }
 
